@@ -26,7 +26,7 @@ public class AccountController : BaseAPIController
     [HttpPost("register")]
     public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
     {
-        if (await UserExists(registerDto.UserName)) return BadRequest("UserName is taken");
+        if (await UserExists(registerDto.UserName)) return BadRequest("Username is taken");
 
         using var hmac = new HMACSHA512();
 
@@ -52,7 +52,7 @@ public class AccountController : BaseAPIController
     {
         var user = await _context.Users.SingleOrDefaultAsync(user => user.UserName == loginDto.UserName.ToLower());
 
-        if (user == null) return Unauthorized("Invalid Username");
+        if (user == null) return Unauthorized("Invalid Username or Password");
 
         using var hmac = new HMACSHA512(user.PasswordSalt);
 
@@ -60,7 +60,7 @@ public class AccountController : BaseAPIController
 
         for (int i = 0; i < computedHash.Length; i++)
         {
-            if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid Password");
+            if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid Username or Password");
         }
 
         return new UserDto
