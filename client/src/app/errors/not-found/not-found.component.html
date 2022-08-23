@@ -1,0 +1,7 @@
+<div class="contatiner">
+    <div style="text-align: center;">
+        <h1>404: Page Not Found!!</h1>
+        <button *ngIf="(accountService.currentUser$ | async)" class="btn btn-info" routerLink="/members">Return to Matches</button>
+        <button *ngIf="(accountService.currentUser$ | async) === null" class="btn btn-info" routerLink="/">Return to Home</button>
+    </div>
+</div>

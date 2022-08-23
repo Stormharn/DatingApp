@@ -1,0 +1,22 @@
+<div class="ml-2">
+    <h4>Internal Server Error! Please do not refresh - this will make the error disappear</h4>
+    <ng-container *ngIf="error">
+        <h5 class="text-danger">
+            Error: {{error.message}}
+        </h5>
+        <p class="font-weight-bold">Note: if you see this please follow steps and submit bug report</p>
+        <p>what to do next?</p>
+        <ol>
+            <li>Open the chrome dev tools</li>
+            <li>Inspect the Network tab</li>
+            <li>Check the failing request</li>
+            <li>Examine the request URL - make sure this is correct</li>
+            <li>Attempt to Reproduce in Postmant</li>
+        </ol>
+        <p>Stack Trace:</p>
+        <code class="mt-2">
+            {{error.details}}
+        </code>
+    </ng-container>
+</div>
+
