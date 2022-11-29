@@ -1,26 +1,28 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using API.Extensions;
+using API.Middleware;
 
-namespace API
-{
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
+var builder = WebApplication.CreateBuilder(args);
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
-}
+// Services Container
+builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddControllers();
+builder.Services.AddCors();
+builder.Services.AddIdentityServices(builder.Configuration);
+
+// Middleware
+var app = builder.Build();
+app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseHttpsRedirection();
+
+app.UseRouting();
+
+app.UseCors(policyName => policyName.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
+
+app.UseAuthentication();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
