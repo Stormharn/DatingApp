@@ -71,7 +71,7 @@
             "sslKey": "./ssl/server.key",
             "sslCert": "./ssl/server.crt",
             "ssl": true,
-            "browserTarget": "test:build"
+            "browserTarget": "client:build"
           },
           "configurations": {
             "production": {
