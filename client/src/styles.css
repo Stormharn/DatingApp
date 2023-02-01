@@ -12,7 +12,7 @@
   }
   
   .member-tabset > .nav-tabs > li.open > a, .member-tabset > .nav-tabs > li:hover > a {
-    border: 0;
+    border: 2;
     background: none !important;
     color: #c2c2c2;
   }
@@ -31,7 +31,7 @@
   }
   
   .member-tabset > .nav-tabs > li.active > a {
-    border: 0 !important;
+    border: 2 !important;
     color: rgb(76, 155, 232);
   }
   

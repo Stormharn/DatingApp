@@ -35,7 +35,11 @@ export class ErrorInterceptor implements HttpInterceptor {
               }
               break;
             case 401:
-              this.toastr.error(error.statusText === "OK" ? "Unauthorized": error.statusText, error.status);
+              if (error = "Invalid Username or Password") {
+                this.toastr.error("Invalid Username or Password");
+              } else {
+                this.toastr.error(error.statusText === "OK" ? "Unauthorized": error.statusText, error.status);
+              }
               break;
             case 404:
               this.router.navigateByUrl('/not-found');
