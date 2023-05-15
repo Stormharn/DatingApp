@@ -9,6 +9,7 @@ export interface Member {
     created: Date;
     lastActive: Date;
     gender: string;
+    interestedIn: string;
     introduction: string;
     lookingFor: string;
     interests: string;

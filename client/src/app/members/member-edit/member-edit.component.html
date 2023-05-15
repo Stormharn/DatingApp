@@ -22,11 +22,11 @@
                 </div>
                 <div>
                     <strong>Last Active:</strong>
-                    <p>{{member.lastActive}}</p>
+                    <p>{{member.lastActive + 'z' | timeago}}</p>
                 </div>
                 <div>
                     <strong>Member Since:</strong>
-                    <p>{{member.created}}</p>
+                    <p>{{member.created | date: 'longDate'}}</p>
                 </div>
             </div>
             <div class="card-footer">
@@ -44,6 +44,12 @@
                 <textarea class="form-control" [(ngModel)]="member.lookingFor" name="lookingFor" rows="6"></textarea>
                 <h4 class="mt-2">Interests</h4>
                 <textarea class="form-control" [(ngModel)]="member.interests" name="interests" rows="6"></textarea>
+                <h4 class="mt-2">I am Interested in:</h4>
+                <div>
+                    <input style="height: 20px; width: 20px; margin-right: 10px;" type="radio" [(ngModel)]="member.interestedIn" name="interestedIn" value="male">Males
+                    <input class="ms-2" style="height: 20px; width: 20px; margin-right: 10px;" type="radio" [(ngModel)]="member.interestedIn" name="interestedIn" value="female">Females
+                    <input class="ms-2" style="height: 20px; width: 20px; margin-right: 10px;" type="radio" [(ngModel)]="member.interestedIn" name="interestedIn" value="any">Any
+                </div>
                 <h4 class="mt-2">Location Details:</h4>
                 <div class="d-flex flex-row align-items-center">
                     <label for="city">City: </label>
@@ -53,6 +59,7 @@
                 </div>
                 </form>
             </tab>
+
             <tab heading="Edit Photos">
                 <p>Photo edit will go here</p>
             </tab>
