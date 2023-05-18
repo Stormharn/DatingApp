@@ -47,6 +47,24 @@ export class MembersService {
     return;
    }
 
+   logout() {
+    this.members = [];
+    this.memberCache = new Map();
+    this.user = undefined;
+    this.userParams = undefined;
+   }
+
+   login() {
+    this.accountService.currentUser$.pipe(take(1)).subscribe({
+      next: user => {
+        if (user) {
+          this.userParams = new UserParams(user);
+          this.user = user;
+        }
+      }
+    })
+   }
+
   getMembers(userParams: UserParams) {
     const response = this.memberCache.get(Object.values(userParams).join('-'));
     if (response) return of (response);
@@ -94,6 +112,17 @@ export class MembersService {
     return this.http.delete(this.baseUrl + 'users/delete-photo/' + photoId)
   }
 
+  addLike(username: string) {
+    return this.http.post(this.baseUrl + 'likes/' + username, {});
+  }
+
+  getLikes(predicate: string, pageNumber: number, pageSize: number) {
+    let params = this.getPaginationHeaders(pageNumber, pageSize);
+
+    params = params.append('predicate', predicate)
+
+    return this.GetPaginatedResults<Member[]>(this.baseUrl + 'likes', params)
+  }
   
   private GetPaginatedResults<T>(url: string, params: HttpParams) {
     const paginatedResult: PaginatedResult<T> = new PaginatedResult<T>()
