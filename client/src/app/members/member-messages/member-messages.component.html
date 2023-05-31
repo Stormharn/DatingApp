@@ -1,0 +1,54 @@
+<button class="btn btn-primary" type="button" *ngIf="!editMode" (click)="toggleEditMode()">Edit Messages</button>
+<button class="btn btn-primary" type="button" *ngIf="editMode" (click)="toggleEditMode()">End Edit</button>
+<div class="card">
+    <div class="card-body">
+        <div *ngIf="messages.length === 0">
+            No messages yet... Say hi using the message box below
+        </div>
+
+        <ul *ngIf="messages.length > 0" class="chat">
+            <li *ngFor="let message of messages">
+                <div>
+                    <button *ngIf="editMode" class="btn btn-danger float-end" (click)="$event.stopPropagation()" (click)="deleteMessage(message.id)"><i class="fa fa-trash"></i></button>
+                    <span class="chat-img float-start" *ngIf="message.senderUsername === username">
+                        <img class="rounded-circle" src="{{message.senderPhotoUrl || './assets/user.png'}}" alt="image of user">
+                    </span>
+                    <span class="chat-img float-end" *ngIf="message.senderUsername !== username">
+                        <img class="rounded-circle" src="{{message.senderPhotoUrl || './assets/user.png'}}" alt="image of user">
+                    </span>
+                    <div class="chat-body float-start" *ngIf="message.senderUsername === username" >
+                        <div class="header">
+                            <small class="text-muted">
+                                <span class="fa fa-clock-o">{{message.dateSent + 'Z' | timeago}}</span>
+                                <span class="text-danger" *ngIf="!message.dateRead && message.senderUsername !== username">(unread)</span>
+                                <span class="text-success" *ngIf="message.dateRead && message.senderUsername !== username">(read {{message.dateRead + 'Z'| timeago}})</span>
+                            </small>
+                        </div>
+                        <p class="text">{{message.content}}</p>
+                    </div>
+                    <div class="chat-body float-end" *ngIf="message.senderUsername !== username" >
+                        <div class="header">
+                            <small class="text-muted">
+                                <span class="fa fa-clock-o">{{message.dateSent + 'Z' | timeago}}</span>
+                                <span class="text-danger" *ngIf="!message.dateRead && message.senderUsername !== username">(unread)</span>
+                                <span class="text-success" *ngIf="message.dateRead && message.senderUsername !== username">(read {{message.dateRead + 'Z'| timeago}})</span>
+                            </small>
+                        </div>
+                        <p class="text">{{message.content}}</p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card-footer">
+        <form #messageForm="ngForm" (ngSubmit)="sendMessage()" autocomplete="off">
+            <div class="input-group">
+                <input name="messageContent" required [(ngModel)]="messageContent" type="text" class="form-control input-sm" placeholder="Send a private message">
+                <div class="input-group-append">
+                    <button [disabled]="!messageForm.valid" class="btn btn-primary" type="submit">Send</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
