@@ -2,8 +2,8 @@
     <h2 class="text-center text-primary">Sign up</h2>
     <hr>
     <app-text-input [formControl]="$any(registerForm.controls['username'])" [label]="'Username'"></app-text-input>
-    <app-text-input [formControl]="$any(registerForm.controls['password'])" [label]="'Password'"></app-text-input>
-    <app-text-input [formControl]="$any(registerForm.controls['confirmPassword'])" [label]="'Confrim Password'"></app-text-input>
+    <app-text-input [formControl]="$any(registerForm.controls['password'])" [label]="'Password'" [type]="'password'"></app-text-input>
+    <app-text-input [formControl]="$any(registerForm.controls['confirmPassword'])" [label]="'Confrim Password'" [type]="'password'"></app-text-input>
     <div class="mb-2">
         <label style="margin-right:10px">I am a: </label>
         <label class="form-check-label">

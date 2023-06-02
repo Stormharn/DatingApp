@@ -100,7 +100,7 @@
         ]
     },
     {
-        "UserName": "Wonder Woman",
+        "UserName": "WonderWoman",
         "Gender": "female",
         "InterestedIn": "any",
         "DateOfBirth": "1981-03-15",
@@ -120,7 +120,7 @@
         ]
     },
     {
-        "UserName": "Spider-Man",
+        "UserName": "SpiderMan",
         "Gender": "male",
         "InterestedIn": "female",
         "DateOfBirth": "1995-05-10",
