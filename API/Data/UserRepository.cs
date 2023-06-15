@@ -64,16 +64,20 @@ namespace API.Data
                 .SingleOrDefaultAsync(x => x.UserName == username);
         }
 
+        public async Task<GenderPrefsDto> GetUserGenderPrefs(string username)
+        {
+            var genderPrefs = new GenderPrefsDto();
+            genderPrefs.Gender = await _context.Users.Where(x => x.UserName == username).Select(x => x.Gender).FirstOrDefaultAsync();
+            genderPrefs.InterestedIn = await _context.Users.Where(x => x.UserName == username).Select(x => x.InterestedIn).FirstOrDefaultAsync();
+
+            return genderPrefs;
+        }
+
         public async Task<IEnumerable<AppUser>> GetUsersAsync()
         {
             return await _context.Users
                 .Include(p => p.Photos)
                 .ToListAsync();
-        }
-
-        public async Task<bool> SaveAllAsync()
-        {
-            return await _context.SaveChangesAsync() > 0;
         }
 
         public void Update(AppUser user)

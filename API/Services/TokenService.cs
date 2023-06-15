@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using API.Controllers;
 using API.Entities;
 using API.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -24,7 +25,7 @@ public class TokenService : ITokenService
         {
             new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
-            new Claim(JwtRegisteredClaimNames.GivenName, user.KnownAs)
+            new Claim(JwtRegisteredClaimNames.GivenName, user.KnownAs == null ? "Admin" : user.KnownAs)
         };
 
         var roles = await _userManager.GetRolesAsync(user);

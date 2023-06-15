@@ -26,6 +26,7 @@ export class NavComponent implements OnInit, OnDestroy {
     this.subscription = this.accountService.login(this.model).subscribe({
       next: response => {
         this.memberService.login();
+        this.model = {};
         this.router.navigateByUrl("/members");
       },
       error: error => {

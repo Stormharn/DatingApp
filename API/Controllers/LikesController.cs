@@ -9,26 +9,23 @@ namespace API.Controllers
 {
     public class LikesController : BaseAPIController
     {
-        private readonly ILikesRepository _likesRepo;
-        private readonly IUserRepository _userRepo;
-        public LikesController(IUserRepository userRepo, ILikesRepository likesRepo)
+        private readonly IUnitOfWork _uow;
+        public LikesController(IUnitOfWork uow)
         {
-            _userRepo = userRepo;
-            _likesRepo = likesRepo;
-            
+            _uow = uow;  
         }
 
         [HttpPost("{username}")]
         public async Task<ActionResult> AddLike(string username)
         {
             var sourceUserId = User.GetUserId();
-            var likedUser = await _userRepo.GetUserByUsernameAsync(username);
-            var sourceUser = await _likesRepo.GetUserWithLikes(sourceUserId);
+            var likedUser = await _uow.UserRepo.GetUserByUsernameAsync(username);
+            var sourceUser = await _uow.LikesRepo.GetUserWithLikes(sourceUserId);
 
             if (likedUser == null) return NotFound();
             if (sourceUser.UserName == username) return BadRequest("You cannot like yourself");
 
-            var userLike = await _likesRepo.GetUserLike(sourceUserId, likedUser.Id);
+            var userLike = await _uow.LikesRepo.GetUserLike(sourceUserId, likedUser.Id);
 
             if (userLike != null) return BadRequest("You already like this user");
 
@@ -40,7 +37,7 @@ namespace API.Controllers
 
             sourceUser.LikedUsers.Add(userLike);
 
-            if (await _userRepo.SaveAllAsync()) return Ok();
+            if (await _uow.Complete()) return Ok();
 
             return BadRequest("Failed to like user");
         }
@@ -50,7 +47,7 @@ namespace API.Controllers
         {
             likesParams.UserID = User.GetUserId();
 
-            var users = await _likesRepo.GetUserLikes(likesParams);
+            var users = await _uow.LikesRepo.GetUserLikes(likesParams);
 
             Response.AddPaginationHeader(new PaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages));
 
