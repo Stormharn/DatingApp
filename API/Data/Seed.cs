@@ -19,7 +19,7 @@ namespace API.Data
         {
             if (await userManager.Users.AnyAsync()) { return; }
 
-            var userData = await File.ReadAllTextAsync("Data/UserSeedData.json");
+            var userData = await File.ReadAllTextAsync("Data/SuperheroSeedData.json");
 
             var options = new JsonSerializerOptions{PropertyNameCaseInsensitive = true};
 
