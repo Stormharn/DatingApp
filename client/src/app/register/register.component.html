@@ -1,4 +1,4 @@
-<form #registerForm="ngForm" (ngSubmit)="register()" autocomplete="off"> 
+<form [formGroup]="registerForm" (ngSubmit)="registerForm.valid && register()" autocomplete="off"> 
     <h2 class="text-center text-primary">Sign up</h2>
     <hr>
     <app-text-input [formControl]="$any(registerForm.controls['username'])" [label]="'Username'"></app-text-input>
@@ -12,8 +12,17 @@
         <label class="form-check-label">
             <input type="radio" class="form-check-input ms-3" value="female" formControlName="gender">Female
         </label>
+    </div>
+    <div class="mb-2">
+        <label style="margin-right:10px">I am Interested in: </label>
         <label class="form-check-label">
-            <input type="radio" class="form-check-input ms-3" value="invalid" formControlName="gender">Invalid
+            <input type="radio" class="form-check-input" value="male" formControlName="interestedIn">Males
+        </label>
+        <label class="form-check-label">
+            <input type="radio" class="form-check-input ms-3" value="female" formControlName="interestedIn">Females
+        </label>
+        <label class="form-check-label">
+            <input type="radio" class="form-check-input ms-3" value="any" formControlName="interestedIn">Any
         </label>
     </div>
     <app-text-input [formControl]="$any(registerForm.controls['knownAs'])" [label]="'Full Name'"></app-text-input>
@@ -30,7 +39,7 @@
     </div>
     
     <div class="text-center">
-        <button class="btn btn-success me-2" type="submit">Register</button>
+        <button [disabled]="!registerForm.valid" class="btn btn-success me-2" type="submit">Register</button>
         <button class="btn btn-default me-2" type="button" (click)="cancel()">Cancel</button>
     </div>
 </form>

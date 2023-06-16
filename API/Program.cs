@@ -11,7 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Services Container
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddControllers();
-builder.Services.AddCors();
 builder.Services.AddIdentityServices(builder.Configuration);
 
 var connString = "";
